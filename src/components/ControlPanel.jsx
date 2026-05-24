@@ -23,6 +23,14 @@ export const ControlPanel = ({
   setWidgetTransparent,
   pageTransparent,
   setPageTransparent,
+  showTracker,
+  setShowTracker,
+  hideNightCycle,
+  setHideNightCycle,
+  textColor,
+  setTextColor,
+  textOutline,
+  setTextOutline,
 }) => {
   const [copied, setCopied] = useState(false);
   const [copiedObs, setCopiedObs] = useState(false);
@@ -82,6 +90,8 @@ export const ControlPanel = ({
     
     if (!showTracker) params.set('showTracker', 'false');
     if (hideNightCycle) params.set('hideNightCycle', 'true');
+    if (textColor === 'light') params.set('textColor', 'light');
+    if (!textOutline) params.set('textOutline', 'false');
     
     return `${base}?${params.toString()}`;
   };
@@ -338,6 +348,38 @@ export const ControlPanel = ({
               <span className="brutalist-toggle-switch"></span>
               <span>Transparent Widget Box (Kotak Widget Transparan)</span>
             </label>
+
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.25rem', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>Teks Utama (Text Color):</span>
+                <button
+                  type="button"
+                  onClick={() => setTextColor(textColor === 'light' ? 'dark' : 'light')}
+                  className="brutalist-button"
+                  style={{
+                    padding: '0.25rem 0.75rem',
+                    fontSize: '0.8rem',
+                    backgroundColor: textColor === 'light' ? '#fff' : '#000',
+                    color: textColor === 'light' ? '#000' : '#fff',
+                    borderWidth: '2px',
+                    boxShadow: '1.5px 1.5px 0px #888',
+                    transform: 'none',
+                  }}
+                >
+                  {textColor === 'light' ? 'LIGHT (WHITE)' : 'DARK (BLACK)'}
+                </button>
+              </div>
+
+              <label className="brutalist-toggle">
+                <input
+                  type="checkbox"
+                  checked={textOutline}
+                  onChange={(e) => setTextOutline(e.target.checked)}
+                />
+                <span className="brutalist-toggle-switch"></span>
+                <span>Tampilkan Outline Teks Tebal (Text Outline)</span>
+              </label>
+            </div>
           </div>
         </div>
 

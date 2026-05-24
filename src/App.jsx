@@ -17,6 +17,8 @@ function App() {
   const [pageTransparent, setPageTransparent] = useState(false);
   const [showTracker, setShowTracker] = useState(true);
   const [hideNightCycle, setHideNightCycle] = useState(false);
+  const [textColor, setTextColor] = useState('dark');
+  const [textOutline, setTextOutline] = useState(true);
 
   // Simulation State
   const [isSimulating, setIsSimulating] = useState(false);
@@ -68,6 +70,12 @@ function App() {
 
     const hideNightCycleParam = params.get('hideNightCycle');
     if (hideNightCycleParam !== null) setHideNightCycle(hideNightCycleParam === 'true');
+
+    const textColorParam = params.get('textColor');
+    if (textColorParam) setTextColor(textColorParam);
+
+    const textOutlineParam = params.get('textOutline');
+    if (textOutlineParam !== null) setTextOutline(textOutlineParam === 'true');
   }, []);
 
   // Update body styles dynamically when transparency state changes
@@ -135,6 +143,8 @@ function App() {
           widgetTransparent={widgetTransparent}
           showTracker={showTracker}
           hideNightCycle={hideNightCycle}
+          textColor={textColor}
+          textOutline={textOutline}
         />
       </div>
     );
@@ -229,6 +239,8 @@ function App() {
             widgetTransparent={widgetTransparent}
             showTracker={showTracker}
             hideNightCycle={hideNightCycle}
+            textColor={textColor}
+            textOutline={textOutline}
           />
         </div>
 
@@ -260,6 +272,10 @@ function App() {
           setShowTracker={setShowTracker}
           hideNightCycle={hideNightCycle}
           setHideNightCycle={setHideNightCycle}
+          textColor={textColor}
+          setTextColor={setTextColor}
+          textOutline={textOutline}
+          setTextOutline={setTextOutline}
         />
       </main>
 

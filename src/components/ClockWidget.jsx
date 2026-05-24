@@ -13,6 +13,8 @@ export const ClockWidget = ({
   widgetTransparent = false,
   showTracker = true,
   hideNightCycle = false,
+  textColor = 'dark', // 'dark' (black) or 'light' (white)
+  textOutline = true, // thick text borders
 }) => {
   // Determine hours, minutes, seconds
   const hours = time.getHours();
@@ -147,6 +149,7 @@ export const ClockWidget = ({
                 backgroundColor: isDay ? 'var(--bg-widget)' : 'var(--bg-accent)',
                 borderWidth: noBorder ? '1.5px' : '2px',
                 boxShadow: noBorder ? 'none' : '3px 3px 0px 0px var(--shadow-color)',
+                color: '#000000', // badge always black text for brutalism contrast
               }}
             >
               {isDay ? 'DAY CYCLE' : 'NIGHT CYCLE'}
@@ -250,10 +253,13 @@ export const ClockWidget = ({
               fontSize: layout === 'wide' ? '6.5rem' : '4.5rem',
               lineHeight: '0.85',
               ...fontStyles,
-              color: 'var(--text-main)',
-              textShadow: noBorder 
-                ? 'none' 
-                : '3px 3px 0px var(--bg-accent), -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000',
+              color: textColor === 'light' ? '#ffffff' : '#000000',
+              textShadow: textOutline 
+                ? (noBorder 
+                    ? '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000' 
+                    : '3px 3px 0px var(--bg-accent), -1.5px -1.5px 0px #000, 1.5px -1.5px 0px #000, -1.5px 1.5px 0px #000, 1.5px 1.5px 0px #000')
+                : 'none',
+              transition: 'all 0.3s ease',
             }}
           >
             {strHours}:{strMinutes}
@@ -277,7 +283,7 @@ export const ClockWidget = ({
                   fontSize: '1rem',
                   padding: '0.1rem 0.4rem',
                   backgroundColor: 'var(--bg-accent)',
-                  color: 'var(--text-main)',
+                  color: '#000000',
                   fontFamily: 'var(--font-mono)',
                   borderWidth: noBorder ? '1.5px' : '2px',
                   boxShadow: noBorder ? 'none' : '2px 2px 0px #000',
@@ -295,10 +301,13 @@ export const ClockWidget = ({
                   fontFamily: 'var(--font-bebas)',
                   fontSize: '2.5rem',
                   lineHeight: '0.9',
-                  color: 'var(--text-accent)',
+                  color: textColor === 'light' ? 'var(--bg-accent)' : 'var(--text-accent)',
                   fontWeight: '900',
                   letterSpacing: '1px',
-                  textShadow: noBorder ? 'none' : '1.5px 1.5px 0px #000',
+                  textShadow: textOutline 
+                    ? '1.5px 1.5px 0px #000, -1.5px -1.5px 0px #000, 1.5px -1.5px 0px #000, -1.5px 1.5px 0px #000'
+                    : 'none',
+                  transition: 'all 0.3s ease',
                 }}
               >
                 {ampm}
@@ -320,7 +329,7 @@ export const ClockWidget = ({
               className="brutalist-badge"
               style={{
                 backgroundColor: 'var(--bg-accent)',
-                color: 'var(--text-main)',
+                color: '#000000',
                 fontSize: '1.05rem',
                 padding: '0.4rem 1rem',
                 fontFamily: 'var(--font-space)',

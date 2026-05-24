@@ -15,6 +15,8 @@ function App() {
   const [noBorder, setNoBorder] = useState(false);
   const [widgetTransparent, setWidgetTransparent] = useState(false);
   const [pageTransparent, setPageTransparent] = useState(false);
+  const [showTracker, setShowTracker] = useState(true);
+  const [hideNightCycle, setHideNightCycle] = useState(false);
 
   // Simulation State
   const [isSimulating, setIsSimulating] = useState(false);
@@ -60,6 +62,12 @@ function App() {
 
     const widgetTransparentParam = params.get('widgetTransparent');
     if (widgetTransparentParam !== null) setWidgetTransparent(widgetTransparentParam === 'true');
+
+    const showTrackerParam = params.get('showTracker');
+    if (showTrackerParam !== null) setShowTracker(showTrackerParam === 'true');
+
+    const hideNightCycleParam = params.get('hideNightCycle');
+    if (hideNightCycleParam !== null) setHideNightCycle(hideNightCycleParam === 'true');
   }, []);
 
   // Update body styles dynamically when transparency state changes
@@ -125,6 +133,8 @@ function App() {
           theme={theme}
           noBorder={noBorder}
           widgetTransparent={widgetTransparent}
+          showTracker={showTracker}
+          hideNightCycle={hideNightCycle}
         />
       </div>
     );
@@ -217,6 +227,8 @@ function App() {
             theme={theme}
             noBorder={noBorder}
             widgetTransparent={widgetTransparent}
+            showTracker={showTracker}
+            hideNightCycle={hideNightCycle}
           />
         </div>
 
@@ -244,6 +256,10 @@ function App() {
           setWidgetTransparent={setWidgetTransparent}
           pageTransparent={pageTransparent}
           setPageTransparent={setPageTransparent}
+          showTracker={showTracker}
+          setShowTracker={setShowTracker}
+          hideNightCycle={hideNightCycle}
+          setHideNightCycle={setHideNightCycle}
         />
       </main>
 

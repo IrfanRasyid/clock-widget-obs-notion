@@ -80,6 +80,9 @@ export const ControlPanel = ({
       if (pageTransparent) params.set('transparent', 'true');
     }
     
+    if (!showTracker) params.set('showTracker', 'false');
+    if (hideNightCycle) params.set('hideNightCycle', 'true');
+    
     return `${base}?${params.toString()}`;
   };
 
@@ -262,6 +265,27 @@ export const ControlPanel = ({
                 />
                 <span className="brutalist-toggle-switch"></span>
                 <span>Show Date</span>
+              </label>
+
+              <label className="brutalist-toggle">
+                <input
+                  type="checkbox"
+                  checked={showTracker}
+                  onChange={(e) => setShowTracker(e.target.checked)}
+                />
+                <span className="brutalist-toggle-switch"></span>
+                <span>Show Cycle Tracker</span>
+              </label>
+
+              <label className="brutalist-toggle">
+                <input
+                  type="checkbox"
+                  checked={hideNightCycle}
+                  onChange={(e) => setHideNightCycle(e.target.checked)}
+                  disabled={!showTracker}
+                />
+                <span className="brutalist-toggle-switch" style={{ opacity: showTracker ? 1 : 0.5 }}></span>
+                <span style={{ color: showTracker ? 'inherit' : '#888' }}>Hide Tracker during Night</span>
               </label>
             </div>
           </div>

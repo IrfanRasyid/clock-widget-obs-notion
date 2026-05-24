@@ -8,7 +8,55 @@ import React from 'react';
  * @param {boolean} props.isDay - Whether it's currently day time (sunrise to sunset)
  * @param {string} props.size - Size class for the icon wrapper
  */
-export const SunMoonIcon = ({ isDay, size = "w-24 h-24" }) => {
+export const SunMoonIcon = ({ isDay, size = "w-24 h-24", mini = false }) => {
+  if (mini) {
+    if (isDay) {
+      return (
+        <svg
+          viewBox="0 0 24 24"
+          style={{ width: '100%', height: '100%', overflow: 'visible' }}
+        >
+          {/* Flat yellow sun body */}
+          <circle
+            cx="12"
+            cy="12"
+            r="6"
+            fill="#fcf634"
+            stroke="#000000"
+            strokeWidth="2"
+          />
+          {/* Simple clean sun rays */}
+          <g stroke="#000000" strokeWidth="2" strokeLinecap="round">
+            <line x1="12" y1="2" x2="12" y2="4" />
+            <line x1="12" y1="20" x2="12" y2="22" />
+            <line x1="2" y1="12" x2="4" y2="12" />
+            <line x1="20" y1="12" x2="22" y2="12" />
+            <line x1="4.93" y1="4.93" x2="6.34" y2="6.34" />
+            <line x1="17.66" y1="17.66" x2="19.07" y2="19.07" />
+            <line x1="4.93" y1="19.07" x2="6.34" y2="17.66" />
+            <line x1="17.66" y1="6.34" x2="19.07" y2="4.93" />
+          </g>
+        </svg>
+      );
+    } else {
+      return (
+        <svg
+          viewBox="0 0 24 24"
+          style={{ width: '100%', height: '100%', overflow: 'visible' }}
+        >
+          {/* Flat white crescent moon body */}
+          <path
+            d="M12 3a9 9 0 1 0 9 9 9.75 9.75 0 0 1-9-9Z"
+            fill="#ffffff"
+            stroke="#000000"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    }
+  }
+
   if (isDay) {
     return (
       <svg

@@ -42,6 +42,7 @@ export const ControlPanel = ({
     { id: 'pinkwhite', name: 'Pink White', bg: '#ffffff', accent: '#ff85a2' },
     { id: 'mintlime', name: 'Mint Lime', bg: '#5efd9c', accent: '#10b981' },
     { id: 'sunmoon', name: 'Sun & Moon', bg: '#fdba74', accent: '#93c5fd' },
+    { id: 'sweetplum', name: 'Sweet Plum', bg: '#4a2c3c', accent: '#df8671' },
     { id: 'mono', name: 'Mono Stark', bg: '#ffffff', accent: '#e5e7eb' },
   ];
 
@@ -208,14 +209,16 @@ export const ControlPanel = ({
             <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.75rem', fontSize: '0.9rem', textTransform: 'uppercase' }}>
               3. Widget Layout
             </label>
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
               <button
+                type="button"
                 onClick={() => setLayout('wide')}
                 className="brutalist-button"
                 style={{
                   flex: 1,
+                  minWidth: '100px',
                   padding: '0.5rem',
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   backgroundColor: layout === 'wide' ? 'var(--bg-accent)' : '#fff',
                   boxShadow: layout === 'wide' ? '3px 3px 0px #000' : '1px 1px 0px #000',
                   transform: layout === 'wide' ? 'translate(-1px, -1px)' : 'none',
@@ -225,19 +228,38 @@ export const ControlPanel = ({
                 Wide (Notion)
               </button>
               <button
+                type="button"
                 onClick={() => setLayout('compact')}
                 className="brutalist-button"
                 style={{
                   flex: 1,
+                  minWidth: '100px',
                   padding: '0.5rem',
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   backgroundColor: layout === 'compact' ? 'var(--bg-accent)' : '#fff',
                   boxShadow: layout === 'compact' ? '3px 3px 0px #000' : '1px 1px 0px #000',
                   transform: layout === 'compact' ? 'translate(-1px, -1px)' : 'none',
                   borderWidth: '2px',
                 }}
               >
-                Compact (Square)
+                Compact
+              </button>
+              <button
+                type="button"
+                onClick={() => setLayout('pill')}
+                className="brutalist-button"
+                style={{
+                  flex: 1,
+                  minWidth: '100px',
+                  padding: '0.5rem',
+                  fontSize: '0.82rem',
+                  backgroundColor: layout === 'pill' ? 'var(--bg-accent)' : '#fff',
+                  boxShadow: layout === 'pill' ? '3px 3px 0px #000' : '1px 1px 0px #000',
+                  transform: layout === 'pill' ? 'translate(-1px, -1px)' : 'none',
+                  borderWidth: '2px',
+                }}
+              >
+                Pill (Capsule)
               </button>
             </div>
           </div>

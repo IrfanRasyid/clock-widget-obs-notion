@@ -98,6 +98,137 @@ export const ClockWidget = ({
     transition: 'all 0.3s ease',
   };
 
+  const getOrdinalSuffix = (day) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1:  return "st";
+      case 2:  return "nd";
+      case 3:  return "rd";
+      default: return "th";
+    }
+  };
+
+  if (layout === 'pill') {
+    const pillWidgetStyle = {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      width: '100%',
+      maxWidth: '460px',
+      padding: '0.75rem 1.5rem',
+      borderRadius: '35px',
+      userSelect: 'none',
+      border: noBorder ? 'none' : 'var(--border-width-thick) solid var(--border-color)',
+      boxShadow: noBorder ? 'none' : 'var(--shadow-offset-thick) var(--shadow-offset-thick) 0px 0px var(--shadow-color)',
+      backgroundColor: widgetTransparent ? 'transparent' : 'var(--bg-slider-track)',
+      transition: 'all 0.3s ease',
+    };
+
+    return (
+      <div className={`brutalist-card theme-${theme}`} style={pillWidgetStyle}>
+        {/* Left Side: Time (e.g. 00:04 AM) */}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.25rem' }}>
+          <span
+            style={{
+              fontSize: '3.8rem',
+              lineHeight: '1',
+              ...fontStyles,
+              color: textColor === 'light' ? '#ffffff' : 'var(--bg-accent)',
+              textShadow: textOutline 
+                ? '2px 2px 0px var(--border-color), -1.5px -1.5px 0px var(--border-color), 1.5px -1.5px 0px var(--border-color), -1.5px 1.5px 0px var(--border-color), 1.5px 1.5px 0px var(--border-color)'
+                : 'none',
+              transition: 'all 0.3s ease',
+            }}
+          >
+            {strHours}:{strMinutes}
+          </span>
+          
+          {format12h && (
+            <span
+              style={{
+                fontFamily: 'var(--font-bebas)',
+                fontSize: '1.4rem',
+                fontWeight: '900',
+                color: textColor === 'light' ? '#ffffff' : 'var(--bg-accent)',
+                marginLeft: '0.35rem',
+                textShadow: textOutline 
+                  ? '1.5px 1.5px 0px var(--border-color), -1.5px -1.5px 0px var(--border-color), 1.5px -1.5px 0px var(--border-color), -1.5px 1.5px 0px var(--border-color)'
+                  : 'none',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              {ampm}
+            </span>
+          )}
+        </div>
+
+        {/* Right Side: Capsule and Date */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.4rem' }}>
+          {/* Day & Sun/Moon Capsule */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: 'var(--border-color, #000000)',
+              padding: '2px',
+              borderRadius: '999px',
+              border: '2px solid var(--border-color)',
+              height: '32px',
+              width: '90px',
+              justifyContent: 'space-between',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Day of the week pill */}
+            <div
+              style={{
+                backgroundColor: 'var(--bg-pill-day, var(--bg-accent))',
+                color: 'var(--text-pill-day, #000000)',
+                fontWeight: 'bold',
+                fontSize: '0.72rem',
+                fontFamily: 'var(--font-space)',
+                padding: '0 8px',
+                height: '100%',
+                borderRadius: '999px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                letterSpacing: '0.5px',
+              }}
+            >
+              {dayName}
+            </div>
+
+            {/* Sun/Moon Mini Icon */}
+            <div style={{ width: '22px', height: '22px', marginRight: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <SunMoonIcon isDay={isDay} mini={true} />
+            </div>
+          </div>
+
+          {/* Date Label */}
+          {showDate && (
+            <div
+              style={{
+                fontSize: '0.95rem',
+                fontWeight: 'bold',
+                fontFamily: 'var(--font-space)',
+                letterSpacing: '0.5px',
+                color: textColor === 'light' ? '#ffffff' : 'var(--bg-accent)',
+                textShadow: textOutline 
+                  ? '1.5px 1.5px 0px var(--border-color), -1.5px -1.5px 0px var(--border-color), 1.5px -1.5px 0px var(--border-color), -1.5px 1.5px 0px var(--border-color)'
+                  : 'none',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              {monthName} {dateNum}{getOrdinalSuffix(dateNum)}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`brutalist-card theme-${theme}`} style={widgetBoxStyle}>
       {/* 1. Day/Night Sky Tracker Box */}

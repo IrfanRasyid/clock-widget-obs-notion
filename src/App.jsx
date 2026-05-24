@@ -330,6 +330,7 @@ function App() {
               <ul>
                 <li>Layout <strong>Wide</strong>: Width: <strong>740</strong>, Height: <strong>260</strong></li>
                 <li>Layout <strong>Compact</strong>: Width: <strong>380</strong>, Height: <strong>440</strong></li>
+                <li>Layout <strong>Pill (Capsule)</strong>: Width: <strong>480</strong>, Height: <strong>140</strong></li>
               </ul>
             </li>
             <li>Centang opsi <i>"Refresh browser when scene becomes active"</i> jika ingin memuat ulang saat berpindah scene.</li>

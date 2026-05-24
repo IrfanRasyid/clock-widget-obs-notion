@@ -14,6 +14,10 @@
   --shadow-color: #000000;
   --dot-color: rgba(0, 0, 0, 0.15);
 
+  /* Pill layout capsule custom colors */
+  --bg-pill-day: var(--bg-accent);
+  --text-pill-day: #000000;
+
   --font-bebas: 'Bebas Neue', sans-serif;
   --font-dela: 'Dela Gothic One', sans-serif;
   --font-space: 'Space Grotesk', sans-serif;
@@ -50,6 +54,7 @@
   --text-sub: #1e1f29;
   --text-accent: #8be9fd;
   --shadow-color: #000000;
+  --bg-pill-day: var(--bg-slider-thumb);
 }
 
 .theme-mintlime {
@@ -62,6 +67,7 @@
   --text-sub: #064e3b;
   --text-accent: #f59e0b;
   --shadow-color: #000000;
+  --bg-pill-day: var(--bg-slider-thumb);
 }
 
 .theme-sunmoon {
@@ -74,6 +80,7 @@
   --text-sub: #1e3a8a;
   --text-accent: #1e3a8a;
   --shadow-color: #000000;
+  --bg-pill-day: var(--bg-slider-thumb);
 }
 
 .theme-mono {
@@ -86,6 +93,8 @@
   --text-sub: #4b5563;
   --text-accent: #1f2937;
   --shadow-color: #000000;
+  --bg-pill-day: var(--bg-slider-thumb);
+  --text-pill-day: #ffffff;
 }
 
 .theme-pinkwhite {
@@ -98,7 +107,24 @@
   --text-sub: #4a0e17;
   --text-accent: #ff007f;
   --shadow-color: #000000;
+  --text-pill-day: #ffffff;
 }
+
+.theme-sweetplum {
+  --bg-page: #fdf2f7;
+  --bg-widget: #4a2c3c;
+  --bg-accent: #df8671; /* Peach */
+  --bg-slider-track: #4a2c3c; /* Dark Plum */
+  --bg-slider-thumb: #eb6079; /* Pink */
+  --bg-pill-day: #eb6079; /* Pink */
+  --text-main: #df8671; /* Peach */
+  --text-sub: #eb6079; /* Pink */
+  --text-accent: #eb6079;
+  --text-pill-day: #4a2c3c; /* Plum text on pink pill */
+  --border-color: #1a0f16;
+  --shadow-color: #1a0f16;
+}
+
 
 /* Global Reset & Dotted Grid Background */
 * {

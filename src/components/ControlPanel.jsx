@@ -31,9 +31,20 @@ export const ControlPanel = ({
   setTextColor,
   textOutline,
   setTextOutline,
+  customBgPage,
+  setCustomBgPage,
+  customBgWidget,
+  setCustomBgWidget,
+  customBgAccent,
+  setCustomBgAccent,
+  customBgSliderTrack,
+  setCustomBgSliderTrack,
+  customBgSliderThumb,
+  setCustomBgSliderThumb,
+  customTextMain,
+  setCustomTextMain,
 }) => {
   const [copied, setCopied] = useState(false);
-  const [copiedObs, setCopiedObs] = useState(false);
 
   // Available themes with colors for preview buttons
   const themes = [
@@ -44,6 +55,7 @@ export const ControlPanel = ({
     { id: 'sunmoon', name: 'Sun & Moon', bg: '#fdba74', accent: '#93c5fd' },
     { id: 'sweetplum', name: 'Sweet Plum', bg: '#4a2c3c', accent: '#df8671' },
     { id: 'mono', name: 'Mono Stark', bg: '#ffffff', accent: '#e5e7eb' },
+    { id: 'custom', name: 'Custom Theme 🎨', bg: '#ffffff', accent: '#ff007f' },
   ];
 
   // Available fonts
@@ -67,7 +79,7 @@ export const ControlPanel = ({
   };
 
   // Helper to generate shareable embed URL
-  const getEmbedUrl = (isObs = false) => {
+  const getEmbedUrl = () => {
     const base = window.location.origin + window.location.pathname;
     const params = new URLSearchParams();
     params.set('theme', theme);
@@ -76,40 +88,33 @@ export const ControlPanel = ({
     params.set('format12h', format12h);
     params.set('showSeconds', showSeconds);
     params.set('showDate', showDate);
+    params.set('embed', 'true');
+    params.set('transparent', 'true');
     
-    if (isObs) {
-      params.set('embed', 'true');
-      params.set('transparent', 'true');
-      if (noBorder) params.set('noBorder', 'true');
-      if (widgetTransparent) params.set('widgetTransparent', 'true');
-    } else {
-      params.set('embed', 'true');
-      if (noBorder) params.set('noBorder', 'true');
-      if (widgetTransparent) params.set('widgetTransparent', 'true');
-      if (pageTransparent) params.set('transparent', 'true');
-    }
-    
+    if (noBorder) params.set('noBorder', 'true');
+    if (widgetTransparent) params.set('widgetTransparent', 'true');
     if (!showTracker) params.set('showTracker', 'false');
     if (hideNightCycle) params.set('hideNightCycle', 'true');
     if (textColor === 'light') params.set('textColor', 'light');
     if (!textOutline) params.set('textOutline', 'false');
     
+    if (theme === 'custom') {
+      params.set('cBgPage', customBgPage);
+      params.set('cBgWidget', customBgWidget);
+      params.set('cBgAccent', customBgAccent);
+      params.set('cBgSliderTrack', customBgSliderTrack);
+      params.set('cBgSliderThumb', customBgSliderThumb);
+      params.set('cTextMain', customTextMain);
+    }
+    
     return `${base}?${params.toString()}`;
   };
 
-  // Copy standard link
+  // Copy OBS link
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(getEmbedUrl(false)).then(() => {
+    navigator.clipboard.writeText(getEmbedUrl()).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    });
-  };
-
-  // Copy OBS link
-  const handleCopyObsLink = () => {
-    navigator.clipboard.writeText(getEmbedUrl(true)).then(() => {
-      setCopiedObs(true);
-      setTimeout(() => setCopiedObs(false), 2000);
     });
   };
 
@@ -169,6 +174,141 @@ export const ControlPanel = ({
               </button>
             ))}
           </div>
+
+          {theme === 'custom' && (
+            <div
+              style={{
+                marginTop: '1.25rem',
+                padding: '1.25rem',
+                backgroundColor: '#fff',
+                border: '3px solid #000',
+                boxShadow: '4px 4px 0px #000',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+                gap: '1rem',
+              }}
+            >
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
+                  Page BG
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <input
+                    type="color"
+                    value={customBgPage}
+                    onChange={(e) => setCustomBgPage(e.target.value)}
+                    style={{ border: '2px solid #000', cursor: 'pointer', width: '32px', height: '32px', padding: 0 }}
+                  />
+                  <input
+                    type="text"
+                    value={customBgPage}
+                    onChange={(e) => setCustomBgPage(e.target.value)}
+                    style={{ width: '100%', fontSize: '0.8rem', padding: '4px', border: '1.5px solid #000', fontFamily: 'var(--font-mono)' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
+                  Widget BG
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <input
+                    type="color"
+                    value={customBgWidget}
+                    onChange={(e) => setCustomBgWidget(e.target.value)}
+                    style={{ border: '2px solid #000', cursor: 'pointer', width: '32px', height: '32px', padding: 0 }}
+                  />
+                  <input
+                    type="text"
+                    value={customBgWidget}
+                    onChange={(e) => setCustomBgWidget(e.target.value)}
+                    style={{ width: '100%', fontSize: '0.8rem', padding: '4px', border: '1.5px solid #000', fontFamily: 'var(--font-mono)' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
+                  Accent Color
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <input
+                    type="color"
+                    value={customBgAccent}
+                    onChange={(e) => setCustomBgAccent(e.target.value)}
+                    style={{ border: '2px solid #000', cursor: 'pointer', width: '32px', height: '32px', padding: 0 }}
+                  />
+                  <input
+                    type="text"
+                    value={customBgAccent}
+                    onChange={(e) => setCustomBgAccent(e.target.value)}
+                    style={{ width: '100%', fontSize: '0.8rem', padding: '4px', border: '1.5px solid #000', fontFamily: 'var(--font-mono)' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
+                  Slider Track
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <input
+                    type="color"
+                    value={customBgSliderTrack}
+                    onChange={(e) => setCustomBgSliderTrack(e.target.value)}
+                    style={{ border: '2px solid #000', cursor: 'pointer', width: '32px', height: '32px', padding: 0 }}
+                  />
+                  <input
+                    type="text"
+                    value={customBgSliderTrack}
+                    onChange={(e) => setCustomBgSliderTrack(e.target.value)}
+                    style={{ width: '100%', fontSize: '0.8rem', padding: '4px', border: '1.5px solid #000', fontFamily: 'var(--font-mono)' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
+                  Slider Thumb
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <input
+                    type="color"
+                    value={customBgSliderThumb}
+                    onChange={(e) => setCustomBgSliderThumb(e.target.value)}
+                    style={{ border: '2px solid #000', cursor: 'pointer', width: '32px', height: '32px', padding: 0 }}
+                  />
+                  <input
+                    type="text"
+                    value={customBgSliderThumb}
+                    onChange={(e) => setCustomBgSliderThumb(e.target.value)}
+                    style={{ width: '100%', fontSize: '0.8rem', padding: '4px', border: '1.5px solid #000', fontFamily: 'var(--font-mono)' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '0.25rem', textTransform: 'uppercase' }}>
+                  Text Color
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <input
+                    type="color"
+                    value={customTextMain}
+                    onChange={(e) => setCustomTextMain(e.target.value)}
+                    style={{ border: '2px solid #000', cursor: 'pointer', width: '32px', height: '32px', padding: 0 }}
+                  />
+                  <input
+                    type="text"
+                    value={customTextMain}
+                    onChange={(e) => setCustomTextMain(e.target.value)}
+                    style={{ width: '100%', fontSize: '0.8rem', padding: '4px', border: '1.5px solid #000', fontFamily: 'var(--font-mono)' }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Font Select */}
@@ -225,7 +365,7 @@ export const ControlPanel = ({
                   borderWidth: '2px',
                 }}
               >
-                Wide (Notion)
+                Wide
               </button>
               <button
                 type="button"
@@ -453,55 +593,16 @@ export const ControlPanel = ({
 
         {/* Integration Links Section */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          {/* Notion Link */}
-          <div>
-            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.5rem', fontSize: '0.9rem', textTransform: 'uppercase' }}>
-              7. Embed in Notion / Web
-            </label>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input
-                type="text"
-                readOnly
-                value={getEmbedUrl(false)}
-                onClick={(e) => e.target.select()}
-                style={{
-                  flex: 1,
-                  padding: '0.5rem',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.8rem',
-                  border: '2px solid var(--border-color)',
-                  backgroundColor: '#f9f9f9',
-                  borderRadius: 0,
-                  outline: 'none',
-                }}
-              />
-              <button
-                onClick={handleCopyLink}
-                className="brutalist-button"
-                style={{
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.8rem',
-                  backgroundColor: copied ? '#4ade80' : 'var(--bg-accent)',
-                  whiteSpace: 'nowrap',
-                  borderWidth: '2px',
-                  boxShadow: '2px 2px 0px #000',
-                }}
-              >
-                {copied ? 'COPIED!' : 'COPY URL'}
-              </button>
-            </div>
-          </div>
-
           {/* OBS Browser Source Link */}
           <div>
             <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.5rem', fontSize: '0.9rem', textTransform: 'uppercase', color: '#ff007f' }}>
-              8. OBS Browser Source URL (Untuk Streaming)
+              7. OBS Browser Source URL (Untuk Streaming)
             </label>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <input
                 type="text"
                 readOnly
-                value={getEmbedUrl(true)}
+                value={getEmbedUrl()}
                 onClick={(e) => e.target.select()}
                 style={{
                   flex: 1,
@@ -515,19 +616,19 @@ export const ControlPanel = ({
                 }}
               />
               <button
-                onClick={handleCopyObsLink}
+                onClick={handleCopyLink}
                 className="brutalist-button"
                 style={{
                   padding: '0.5rem 1rem',
                   fontSize: '0.8rem',
-                  backgroundColor: copiedObs ? '#4ade80' : '#ff007f',
+                  backgroundColor: copied ? '#4ade80' : '#ff007f',
                   color: '#fff',
                   whiteSpace: 'nowrap',
                   borderWidth: '2px',
                   boxShadow: '2px 2px 0px #000',
                 }}
               >
-                {copiedObs ? 'COPIED!' : 'COPY OBS URL'}
+                {copied ? 'COPIED!' : 'COPY OBS URL'}
               </button>
             </div>
             <p style={{ fontSize: '0.78rem', color: '#666', marginTop: '0.4rem' }}>

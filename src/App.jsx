@@ -11,6 +11,14 @@ function App() {
   const [showDate, setShowDate] = useState(true);
   const [font, setFont] = useState('dela');
 
+  // Custom colors state
+  const [customBgPage, setCustomBgPage] = useState('#f3f4f6');
+  const [customBgWidget, setCustomBgWidget] = useState('#ffffff');
+  const [customBgAccent, setCustomBgAccent] = useState('#ff007f');
+  const [customBgSliderTrack, setCustomBgSliderTrack] = useState('#111111');
+  const [customBgSliderThumb, setCustomBgSliderThumb] = useState('#00ffff');
+  const [customTextMain, setCustomTextMain] = useState('#000000');
+
   // OBS Overlay Configuration State
   const [noBorder, setNoBorder] = useState(false);
   const [widgetTransparent, setWidgetTransparent] = useState(false);
@@ -76,6 +84,24 @@ function App() {
 
     const textOutlineParam = params.get('textOutline');
     if (textOutlineParam !== null) setTextOutline(textOutlineParam === 'true');
+
+    const cBgPageParam = params.get('cBgPage');
+    if (cBgPageParam) setCustomBgPage(cBgPageParam);
+
+    const cBgWidgetParam = params.get('cBgWidget');
+    if (cBgWidgetParam) setCustomBgWidget(cBgWidgetParam);
+
+    const cBgAccentParam = params.get('cBgAccent');
+    if (cBgAccentParam) setCustomBgAccent(cBgAccentParam);
+
+    const cBgSliderTrackParam = params.get('cBgSliderTrack');
+    if (cBgSliderTrackParam) setCustomBgSliderTrack(cBgSliderTrackParam);
+
+    const cBgSliderThumbParam = params.get('cBgSliderThumb');
+    if (cBgSliderThumbParam) setCustomBgSliderThumb(cBgSliderThumbParam);
+
+    const cTextMainParam = params.get('cTextMain');
+    if (cTextMainParam) setCustomTextMain(cTextMainParam);
   }, []);
 
   // Update body styles dynamically when transparency state changes
@@ -84,10 +110,10 @@ function App() {
       document.body.style.backgroundColor = 'transparent';
       document.body.style.backgroundImage = 'none';
     } else {
-      document.body.style.backgroundColor = 'var(--bg-page)';
+      document.body.style.backgroundColor = theme === 'custom' ? customBgPage : 'var(--bg-page)';
       document.body.style.backgroundImage = 'radial-gradient(var(--dot-color) 1.5px, transparent 1.5px)';
     }
-  }, [pageTransparent, isEmbed]);
+  }, [pageTransparent, isEmbed, theme, customBgPage]);
 
   // Update clock time every second when not simulating
   useEffect(() => {
@@ -119,39 +145,86 @@ function App() {
   // If in embed mode, only render the clock widget at full size
   if (isEmbed) {
     return (
-      <div
-        style={{
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '10px',
-          overflow: 'hidden',
-          backgroundColor: 'transparent',
-        }}
-      >
-        <ClockWidget
-          time={getDisplayTime()}
-          layout={layout}
-          format12h={format12h}
-          showSeconds={showSeconds}
-          showDate={showDate}
-          font={font}
-          theme={theme}
-          noBorder={noBorder}
-          widgetTransparent={widgetTransparent}
-          showTracker={showTracker}
-          hideNightCycle={hideNightCycle}
-          textColor={textColor}
-          textOutline={textOutline}
-        />
-      </div>
+      <>
+        {theme === 'custom' && (
+          <style>{`
+            .theme-custom {
+              --bg-page: ${customBgPage};
+              --bg-widget: ${customBgWidget};
+              --bg-accent: ${customBgAccent};
+              --bg-slider-track: ${customBgSliderTrack};
+              --bg-slider-thumb: ${customBgSliderThumb};
+              --text-main: ${customTextMain};
+              --text-sub: ${customTextMain === '#ffffff' || customTextMain === '#fff' ? '#cccccc' : '#333333'};
+              --text-accent: ${customBgSliderThumb};
+              --bg-pill-day: ${customBgAccent};
+            }
+            body {
+              --bg-page: ${customBgPage};
+              --text-main: ${customTextMain};
+            }
+          `}</style>
+        )}
+        <div
+          style={{
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '10px',
+            overflow: 'hidden',
+            backgroundColor: 'transparent',
+          }}
+        >
+          <ClockWidget
+            time={getDisplayTime()}
+            layout={layout}
+            format12h={format12h}
+            showSeconds={showSeconds}
+            showDate={showDate}
+            font={font}
+            theme={theme}
+            noBorder={noBorder}
+            widgetTransparent={widgetTransparent}
+            showTracker={showTracker}
+            hideNightCycle={hideNightCycle}
+            textColor={textColor}
+            textOutline={textOutline}
+            customBgPage={customBgPage}
+            customBgWidget={customBgWidget}
+            customBgAccent={customBgAccent}
+            customBgSliderTrack={customBgSliderTrack}
+            customBgSliderThumb={customBgSliderThumb}
+            customTextMain={customTextMain}
+          />
+        </div>
+      </>
     );
   }
 
   return (
     <>
+      {theme === 'custom' && (
+        <style>{`
+          .theme-custom {
+            --bg-page: ${customBgPage};
+            --bg-widget: ${customBgWidget};
+            --bg-accent: ${customBgAccent};
+            --bg-slider-track: ${customBgSliderTrack};
+            --bg-slider-thumb: ${customBgSliderThumb};
+            --text-main: ${customTextMain};
+            --text-sub: ${customTextMain === '#ffffff' || customTextMain === '#fff' ? '#cccccc' : '#333333'};
+            --text-accent: ${customBgSliderThumb};
+            --bg-pill-day: ${customBgAccent};
+          }
+          body {
+            --bg-page: ${customBgPage};
+            --text-main: ${customTextMain};
+          }
+        `}</style>
+      )}
+
       {/* Header Area */}
       <header
         style={{
@@ -184,11 +257,11 @@ function App() {
               fontSize: '0.8rem',
             }}
           >
-            NOTION & OBS STREAM READY!
+            OBS STREAM READY!
           </span>
         </div>
         <p style={{ fontWeight: '600', maxWidth: '600px', fontSize: '0.95rem' }}>
-          A highly customizable live clock widget with a day/night sun-moon horizontal tracker. 
+          A highly customizable live clock widget with a day/night sun-moon horizontal tracker.
           Configure, preview, and embed it straight into your dashboards or OBS streaming overlays!
         </p>
       </header>
@@ -241,6 +314,12 @@ function App() {
             hideNightCycle={hideNightCycle}
             textColor={textColor}
             textOutline={textOutline}
+            customBgPage={customBgPage}
+            customBgWidget={customBgWidget}
+            customBgAccent={customBgAccent}
+            customBgSliderTrack={customBgSliderTrack}
+            customBgSliderThumb={customBgSliderThumb}
+            customTextMain={customTextMain}
           />
         </div>
 
@@ -276,35 +355,23 @@ function App() {
           setTextColor={setTextColor}
           textOutline={textOutline}
           setTextOutline={setTextOutline}
+          customBgPage={customBgPage}
+          setCustomBgPage={setCustomBgPage}
+          customBgWidget={customBgWidget}
+          setCustomBgWidget={setCustomBgWidget}
+          customBgAccent={customBgAccent}
+          setCustomBgAccent={setCustomBgAccent}
+          customBgSliderTrack={customBgSliderTrack}
+          setCustomBgSliderTrack={setCustomBgSliderTrack}
+          customBgSliderThumb={customBgSliderThumb}
+          setCustomBgSliderThumb={setCustomBgSliderThumb}
+          customTextMain={customTextMain}
+          setCustomTextMain={setCustomTextMain}
         />
       </main>
 
-      {/* Footer / Notion & OBS Guide */}
+      {/* Footer / OBS Guide */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%', maxWidth: '720px', marginBottom: '3rem' }}>
-        {/* Notion Guide */}
-        <footer
-          style={{
-            backgroundColor: '#000000',
-            color: '#ffffff',
-            padding: '1.5rem',
-            border: '4px solid #ffffff',
-            boxShadow: '6px 6px 0px #000000',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.75rem',
-          }}
-        >
-          <h3 style={{ fontFamily: 'var(--font-space)', fontWeight: 'bold', fontSize: '1rem', textTransform: 'uppercase', color: '#fcf634' }}>
-            ⚡ Notion Integration Guide
-          </h3>
-          <ol style={{ paddingLeft: '1.25rem', fontSize: '0.85rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            <li>Customize the clock layout, colors, and fonts using the configurator above.</li>
-            <li>Click the <strong>COPY URL</strong> button in the Notion / Web card.</li>
-            <li>Open your page in Notion and type <code>/embed</code>, then press Enter.</li>
-            <li>Paste the copied URL and adjust the block size. Done!</li>
-          </ol>
-        </footer>
-
         {/* OBS Stream Guide */}
         <footer
           style={{
@@ -328,9 +395,9 @@ function App() {
             <li>Tempel URL yang disalin pada kolom <strong>URL</strong> di OBS.</li>
             <li>Atur ukuran resolusi (Width & Height) di OBS:
               <ul>
-                <li>Layout <strong>Wide</strong>: Width: <strong>740</strong>, Height: <strong>260</strong></li>
-                <li>Layout <strong>Compact</strong>: Width: <strong>380</strong>, Height: <strong>440</strong></li>
-                <li>Layout <strong>Pill (Capsule)</strong>: Width: <strong>480</strong>, Height: <strong>140</strong></li>
+                <li>Layout <strong>Wide</strong>: Width: <strong>700</strong>, Height: <strong>400</strong></li>
+                <li>Layout <strong>Compact</strong>: Width: <strong>380</strong>, Height: <strong>500</strong></li>
+                <li>Layout <strong>Pill (Capsule)</strong>: Width: <strong>400</strong>, Height: <strong>200</strong></li>
               </ul>
             </li>
             <li>Centang opsi <i>"Refresh browser when scene becomes active"</i> jika ingin memuat ulang saat berpindah scene.</li>

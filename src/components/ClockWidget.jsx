@@ -384,7 +384,7 @@ export const ClockWidget = ({
               fontSize: layout === 'wide' ? '6.5rem' : '4.5rem',
               lineHeight: '0.85',
               ...fontStyles,
-              color: textColor === 'light' ? '#ffffff' : '#000000',
+              color: textColor === 'light' ? '#ffffff' : 'var(--text-main)',
               textShadow: textOutline 
                 ? (noBorder 
                     ? '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000' 
